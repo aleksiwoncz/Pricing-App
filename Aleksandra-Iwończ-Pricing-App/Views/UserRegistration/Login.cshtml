@@ -1,0 +1,39 @@
+﻿@model Aleksandra_Iwończ_Pricing_App.Models.User
+
+@{
+    ViewData["Title"] = "Login";
+    //Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Login</h1>
+<hr />
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Login">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="username" class="control-label"></label>
+                <input asp-for="username" class="form-control" />
+                <span asp-validation-for="username" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="pass" class="control-label"></label>
+                <input asp-for="pass" class="form-control" />
+                <span asp-validation-for="pass" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Submit" class="btn btn-primary" />
+            </div>
+            <b>@ViewBag.message</b>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Create">Are you here for the first time? Register.</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
