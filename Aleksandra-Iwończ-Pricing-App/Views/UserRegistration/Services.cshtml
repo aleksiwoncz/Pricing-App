@@ -1,0 +1,135 @@
+﻿@model Aleksandra_Iwończ_Pricing_App.Models.MultiClass
+
+@{
+    ViewData["Title"] = "Services";
+    //Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+    <ul class="nav nav-pills">
+        <li class="nav-item ">
+            <a class="nav-link active rounded-0" data-toggle="pill" href="#home">Estimate Cost</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link rounded-0" data-toggle="pill" href="#menu1">Our offer</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link rounded-0" data-toggle="pill" href="#menu2">Timeframe</a>
+        </li>
+    </ul>
+    <div class="tab-content">
+        <div class="tab-pane container active p-0" id="home">
+            <h5 class="text-uppercase p-2 text-center">Estimate Cost</h5>
+            <div class="row">
+                <div class="col-md-4">
+                    <form asp-action="Services">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="form-group">
+                            <label asp-for="taskId" class="control-label"></label>
+                            <input asp-for="taskId" class="form-control" />
+                            <span asp-validation-for="taskId" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="technologyId" class="control-label"></label>
+                            <input asp-for="technologyId" class="form-control" />
+                            <span asp-validation-for="technologyId" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="typeId" class="control-label"></label>
+                            <input asp-for="typeId" class="form-control" />
+                            <span asp-validation-for="typeId" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" value="Submit" class="btn btn-primary" />
+                        </div>
+                    </form>
+                    <b>@ViewBag.message</b>
+                </div>
+            </div>
+
+        </div>
+        <div class="tab-pane container fade p-0" id="menu1">
+            <h5 class="text-uppercase p-2 text-center">List of Technologies</h5>
+            <table class="table table-bordered table-striped">
+                <thead class="thead-dark text-white">
+                    <tr>
+                        <th>@Html.DisplayNameFor(m => Model.technologies.FirstOrDefault().technologyId)</th>
+                        <th>@Html.DisplayNameFor(m => Model.technologies.FirstOrDefault().name)</th>
+                        <th>@Html.DisplayNameFor(m => Model.technologies.FirstOrDefault().pricePerHour)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var technology in Model.technologies)
+                    {
+                        <tr>
+                            <td>@technology.technologyId</td>
+                            <td>@technology.name</td>
+                            <td>@technology.pricePerHour</td>
+                        </tr>
+
+
+
+                    }
+                </tbody>
+            </table>
+            <!--
+        <button type="button" onclick="location.href='@Url.Action("EstimateCost", "EstimateCost")'">
+           Estimate the price
+        </button></div> -->
+            <h5 class="text-uppercase p-2 text-center">List of Types</h5>
+            <table class="table table-bordered table-striped">
+                <thead class="thead-dark text-white">
+                    <tr>
+                        <th>@Html.DisplayNameFor(m => Model.types.FirstOrDefault().typeId)</th>
+                        <th>@Html.DisplayNameFor(m => Model.types.FirstOrDefault().name)</th>
+                        <th>@Html.DisplayNameFor(m => Model.types.FirstOrDefault().pricePerHour)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var type in Model.types)
+                    {
+                        <tr>
+                            <td>@type.typeId</td>
+                            <td>@type.name</td>
+                            <td>@type.pricePerHour</td>
+                        </tr>
+
+                    }
+                </tbody>
+            </table>
+            <h5 class="text-uppercase p-2 text-center">List of Tasks</h5>
+            <table class="table table-bordered table-striped">
+                <thead class="thead-dark text-white">
+                    <tr>
+                        <th>@Html.DisplayNameFor(m => Model.tasks.FirstOrDefault().taskId)</th>
+                        <th>@Html.DisplayNameFor(m => Model.tasks.FirstOrDefault().name)</th>
+                        <th>@Html.DisplayNameFor(m => Model.tasks.FirstOrDefault().pricePerHour)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var task in Model.tasks)
+                    {
+                        <tr>
+                            <td>@task.taskId</td>
+                            <td>@task.name</td>
+                            <td>@task.pricePerHour</td>
+
+                        </tr>
+
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div class="tab-pane container fade p-0" id="menu2">
+            <h5 class="text-uppercase p-2 text-center">Timeframe</h5>
+            <center>
+                <h6>Hate waiting? Would you like to have a project already?</h6><br />
+                <br />
+                <strong>We can offer you a service within the following time frames:</strong><br />
+                1) up to 2 weeks - an additional payment 1,000 PLN<br />
+                2) from 3 weeks to a month - an additional payment 500 PLN<br />
+                3) from a month to a month and a half - an additional payment 300 PLN<br />
+                4) above - in the price<br />
+            </center>
+        </div>
+
+    </div>
