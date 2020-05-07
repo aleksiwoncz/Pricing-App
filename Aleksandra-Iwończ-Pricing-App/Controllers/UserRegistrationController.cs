@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Aleksandra_Iwończ_Pricing_App.Models;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Session;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Aleksandra_Iwończ_Pricing_App.Controllers
 {
@@ -60,7 +61,7 @@ namespace Aleksandra_Iwończ_Pricing_App.Controllers
                 var obj = _controller.UserReg.Where(u => u.username.Equals(user.username) && u.pass.Equals(user.pass)).FirstOrDefault();
                 if (obj != null)
                 {
-                    return RedirectToAction("Services");
+                    return RedirectToAction("Estimate");
                 }
                 else
                 {
@@ -82,9 +83,7 @@ namespace Aleksandra_Iwończ_Pricing_App.Controllers
             var multi = new MultiClass();
             if (ModelState.IsValid)
             {
-                multi.tasks = _controller.Task.ToList();
-                multi.technologies = _controller.Technology.ToList();
-                multi.types = _controller.Type.ToList();
+                multi.projects = _controller.Project.ToList();
             }
             else
             {
@@ -93,7 +92,7 @@ namespace Aleksandra_Iwończ_Pricing_App.Controllers
             return View(multi);
         }
 
-        [HttpPost]
+      /*  [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Services(MultiClass multi)
         {
@@ -103,9 +102,9 @@ namespace Aleksandra_Iwończ_Pricing_App.Controllers
                 multi.technologies = _controller.Technology.ToList();
                 multi.types = _controller.Type.ToList();
 
-                var obj_task = _controller.Task.Where(t => t.taskId.Equals(multi.taskId)).FirstOrDefault();
-                var obj_type = _controller.Type.Where(t => t.typeId.Equals(multi.typeId)).FirstOrDefault();
-                var obj_tech = _controller.Technology.Where(t => t.technologyId.Equals(multi.technologyId)).FirstOrDefault();
+                var obj_task = _controller.Task.Where(t => t.taskName.Equals(multi.taskName)).FirstOrDefault();
+                var obj_type = _controller.Type.Where(t => t.typeName.Equals(multi.typeName)).FirstOrDefault();
+                var obj_tech = _controller.Technology.Where(t => t.technologyName.Equals(multi.technologyName)).FirstOrDefault();
 
                 if (obj_task != null && obj_type != null && obj_tech != null)
                 {
@@ -128,61 +127,79 @@ namespace Aleksandra_Iwończ_Pricing_App.Controllers
                 ViewBag.message = "An error ocurred";
             }
             return View(multi);
+        }*/
+
+
+        public IActionResult Estimate()  // Register
+        {
+            var types_db = _controller.Type.ToList();
+            var techs_db = _controller.Technology.ToList();
+            var tasks_db = _controller.Task.ToList();
+            
+            // Make Selectlist, which is IEnumerable<SelectListItem>
+            var typesList = new SelectList(types_db.Select(item => new SelectListItem
+            {
+                Text = item.typeName,
+                Value = item.typeName
+            }).ToList(), "Value", "Text");
+
+            var tasksList = new SelectList(tasks_db.Select(item => new SelectListItem
+            {
+                Text = item.taskName,
+                Value = item.taskName
+            }).ToList(), "Value", "Text");
+
+            var techList = new SelectList(techs_db.Select(item => new SelectListItem
+            {
+                Text = item.technologyName,
+                Value = item.technologyName
+            }).ToList(), "Value", "Text");
+
+            // Assign the Selectlist to the View Model   
+            var project = new Project()
+            {
+                tasks = tasksList,
+                technologies = techList,
+                types = typesList
+            };
+
+            // return View with View Model
+            return View(project);
         }
 
-      /*  public IActionResult EstimateCost(MultiClass multi)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Estimate(Project project)
         {
-            var obj_task = _controller.Task.Where(t => t.taskId.Equals(multi.taskId)).FirstOrDefault();
-            var obj_type = _controller.Type.Where(t => t.typeId.Equals(multi.typeId)).FirstOrDefault();
-            var obj_tech = _controller.Technology.Where(t => t.technologyId.Equals(multi.technologyId)).FirstOrDefault();
-
-            if (obj_task != null && obj_type != null && obj_tech != null)
+            if (ModelState.IsValid)
             {
-                // I assume that the daily work lasts 6 hours, 2 hours for each subject
-                // Standard price is calculated based on 2 months of work, 2 months x 4 tygodnire x 5 dni x 6 godzin
-                // 240 h for a project
+                DateTime today = DateTime.Today;
+                project.date = today.Date;
+                var obj_task = _controller.Task.Where(t => t.taskName.Equals(project.taskName)).FirstOrDefault();
+                var obj_type = _controller.Type.Where(t => t.typeName.Equals(project.typeName)).FirstOrDefault();
+                var obj_tech = _controller.Technology.Where(t => t.technologyName.Equals(project.technologyName)).FirstOrDefault();
+                int hours = project.hours;
 
-                int price_daily = obj_task.pricePerHour * 2 + obj_task.pricePerHour * 2 + obj_task.pricePerHour * 2;
-                ModelState.AddModelError("", Convert.ToString(price_daily));
-
+                if (obj_task != null && obj_type != null && obj_tech != null)
+                {
+                    int price_all = obj_task.pricePerHour + obj_type.pricePerHour + obj_tech.pricePerHour;
+                    price_all *= hours;
+                    project.costs = price_all;
+                    var maxId = _controller.Project.Max(table => table.projectId);
+                    project.projectId = maxId + 1;
+                    ViewBag.message = Convert.ToString(price_all);
+                    _controller.Add(project);
+                    _controller.SaveChanges();
+                    ViewBag.message = "New project was added!";
+                }
             }
             else
             {
-                ViewBag.message = "Sorry, we don't have such items.";
+                ModelState.AddModelError("", "An error occured..");
             }
-            return View(multi);
-        }*/
 
-        /*  [HttpGet]
-          public IActionResult Services(MultiClass multi)
-          {
-              if (ModelState.IsValid)
-              {
-                  var obj_task = _controller.Task.Where(t => t.taskId.Equals(multi.taskId)).FirstOrDefault();
-                  var obj_type = _controller.Type.Where(t => t.typeId.Equals(multi.typeId)).FirstOrDefault();
-                  var obj_tech = _controller.Technology.Where(t => t.technologyId.Equals(multi.technologyId)).FirstOrDefault();
-
-                  if (obj_task != null && obj_type != null && obj_tech != null)
-                  {
-                      // I assume that the daily work lasts 6 hours, 2 hours for each subject
-                      // Standard price is calculated based on 2 months of work, 2 months x 4 tygodnire x 5 dni x 6 godzin
-                      // 240 h for a project
-
-                      int price_daily = obj_task.pricePerHour * 2 + obj_task.pricePerHour * 2 + obj_task.pricePerHour * 2;
-                      ModelState.AddModelError("", Convert.ToString(price_daily));
-
-                  }
-                  else
-                  {
-                      ViewBag.message = "Sorry, we don't have such items.";
-                  }
-              }
-              else
-              {
-                  ModelState.AddModelError("", "An error occured.");
-              }
-              return View();*/
-        //}
+            return View(project);
+        }
 
     }
 }

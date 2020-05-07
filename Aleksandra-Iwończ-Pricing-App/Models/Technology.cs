@@ -9,8 +9,7 @@ namespace Aleksandra_Iwończ_Pricing_App.Models
     public class Technology
     {
         [Key]
-        public int technologyId { get; set; }
-        public string name { get; set; }
+        public string technologyName { get; set; }
         public int pricePerHour { get; set; }
     }
 }

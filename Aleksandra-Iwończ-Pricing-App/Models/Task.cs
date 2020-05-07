@@ -9,8 +9,7 @@ namespace Aleksandra_Iwończ_Pricing_App.Models
     public class Task
     {
         [Key]
-        public int taskId { get; set; }
-        public string name { get; set; }
+        public string taskName { get; set; }
         public int pricePerHour { get; set; }
     }
 }

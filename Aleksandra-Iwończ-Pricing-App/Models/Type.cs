@@ -9,8 +9,7 @@ namespace Aleksandra_Iwończ_Pricing_App.Models
     public class Type
     {
         [Key]
-        public int typeId { get; set; }
-        public string name { get; set; }
+        public string typeName { get; set; }
         public int pricePerHour { get; set; }
     }
 }

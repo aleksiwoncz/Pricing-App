@@ -8,21 +8,21 @@ namespace Aleksandra_Iwończ_Pricing_App.Models
 {
     public class MultiClass
     {
-        public IEnumerable<Task> tasks { get; set; }
-        public IEnumerable<Technology> technologies { get; set; }
+        public IEnumerable<Project> projects { get; set; }
+    /*    public IEnumerable<Technology> technologies { get; set; }
         public IEnumerable<Type> types { get; set; }
-
-        [Required(ErrorMessage = "Task ID cannot be empty")]
+*/
+/*        [Required(ErrorMessage = "Task ID cannot be empty")]
         [Display(Name = "Task ID")] // label
-        public int taskId { get; set; }
+        public string taskName { get; set; }
 
         [Required(ErrorMessage = "Technology ID cannot be empty")]
         [Display(Name = "Technology ID")]
-        public int technologyId { get; set; }
+        public string technologyName { get; set; }
 
         [Required(ErrorMessage = "Type ID cannot be empty")]
         [Display(Name = "Type ID")]
-        public int typeId { get; set; }
+        public string typeName { get; set; }*/
 
     }
 }

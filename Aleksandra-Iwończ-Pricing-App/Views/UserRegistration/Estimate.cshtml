@@ -1,0 +1,54 @@
+﻿@model Aleksandra_Iwończ_Pricing_App.Models.Project
+
+@{
+    ViewData["Title"] = "Estimate";
+}
+
+<h1>Estimate</h1>
+
+<h4>Project</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Estimate">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="projectManager" class="control-label"></label>
+                <input asp-for="projectManager" class="form-control" />
+                <span asp-validation-for="projectManager" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="hours" class="control-label"></label>
+                <input asp-for="hours" class="form-control" />
+                <span asp-validation-for="hours" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="typeName" class="control-label"></label>
+                <select asp-for="typeName" asp-items="Model.types"></select>
+                <span asp-validation-for="typeName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="taskName" class="control-label"></label>
+                <select asp-for="taskName" asp-items="Model.tasks"></select>
+                <span asp-validation-for="taskName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="technologyName" class="control-label"></label>
+                <select asp-for="technologyName" asp-items="Model.technologies"></select>
+                <span asp-validation-for="technologyName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+            <b>@ViewBag.message</b>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Services">See all projects</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
