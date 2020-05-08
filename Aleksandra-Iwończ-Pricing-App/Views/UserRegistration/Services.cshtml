@@ -5,56 +5,35 @@
     //Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-    <ul class="nav nav-pills">
-        <li class="nav-item ">
-            <a class="nav-link active rounded-0" data-toggle="pill" href="#home">Estimate Cost</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link rounded-0" data-toggle="pill" href="#menu1">Timeframe</a>
-        </li>
-    </ul>
-        <div class="tab-pane container active p-0" id="home">
-            <h5 class="text-uppercase p-2 text-center">List of Projects</h5>
-            <table class="table table-bordered table-striped">
-                <thead class="thead-dark text-white">
-                    <tr>
-                        <th>@Html.DisplayNameFor(m => Model.projects.FirstOrDefault().projectManager)</th>
-                        <th>@Html.DisplayNameFor(m => Model.projects.FirstOrDefault().taskName)</th>
-                        <th>@Html.DisplayNameFor(m => Model.projects.FirstOrDefault().technologyName)</th>
-                        <th>@Html.DisplayNameFor(m => Model.projects.FirstOrDefault().typeName)</th>
-                        <th>@Html.DisplayNameFor(m => Model.projects.FirstOrDefault().costs)</th>
-                        <th>@Html.DisplayNameFor(m => Model.projects.FirstOrDefault().date.Date)</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var project in Model.projects)
-                    {
-                    <tr>
-                        <td>@project.projectManager</td>
-                        <td>@project.taskName</td>
-                        <td>@project.technologyName</td>
-                        <td>@project.typeName</td>
-                        <td>@project.costs</td>
-                        <td>@project.date.Date</td>
+        <h5 class="text-uppercase p-2 text-center">List of Projects</h5>
+        <table class="table table-bordered table-striped">
+            <thead class="thead-dark text-white">
+                <tr>
+                    <th>@Html.DisplayNameFor(m => Model.projects.FirstOrDefault().projectManager)</th>
+                    <th>@Html.DisplayNameFor(m => Model.projects.FirstOrDefault().taskName)</th>
+                    <th>@Html.DisplayNameFor(m => Model.projects.FirstOrDefault().technologyName)</th>
+                    <th>@Html.DisplayNameFor(m => Model.projects.FirstOrDefault().typeName)</th>
+                    <th>@Html.DisplayNameFor(m => Model.projects.FirstOrDefault().costs)</th>
+                    <th>@Html.DisplayNameFor(m => Model.projects.FirstOrDefault().date)</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var project in Model.projects)
+                {
+                <tr>
+                    <td>@project.projectManager</td>
+                    <td>@project.taskName</td>
+                    <td>@project.technologyName</td>
+                    <td>@project.typeName</td>
+                    <td>@project.costs</td>
+                    <td>@project.date.ToShortDateString()</td>
 
-                    </tr>
-                    }
-                </tbody>
-            </table>
-            <!--
-        <button type="button" onclick="location.href='@Url.Action("EstimateCost", "EstimateCost")'">
-           Estimate the price
-        </button></div> -->
-        </div>
-        <div class="tab-pane container fade p-0" id="menu1">
-            <h5 class="text-uppercase p-2 text-center">Timeframe</h5>
-            <center>
-                <h6>Hate waiting? Would you like to have a project already?</h6><br />
-                <br />
-                <strong>We can offer you a service within the following time frames:</strong><br />
-                1) up to 2 weeks - an additional payment 1,000 PLN<br />
-                2) from 3 weeks to a month - an additional payment 500 PLN<br />
-                3) from a month to a month and a half - an additional payment 300 PLN<br />
-                4) above - in the price<br />
-            </center>
-        </div>
+                </tr>
+                }
+            </tbody>
+        </table>
+        
+    <button type="button" onclick="location.href='@Url.Action("Estimate")'">
+        Add New Project
+    </button>
+      

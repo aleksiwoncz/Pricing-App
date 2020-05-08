@@ -14,6 +14,7 @@ namespace Aleksandra_Iwończ_Pricing_App.Models
         [Key]
         public int projectId { get; set; }
 
+        [DataType(DataType.Date)]
         [Display(Name = "Date")]
         public DateTime date { get; set; }
 

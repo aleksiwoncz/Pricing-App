@@ -61,7 +61,7 @@ namespace Aleksandra_Iwończ_Pricing_App.Controllers
                 var obj = _controller.UserReg.Where(u => u.username.Equals(user.username) && u.pass.Equals(user.pass)).FirstOrDefault();
                 if (obj != null)
                 {
-                    return RedirectToAction("Estimate");
+                    return RedirectToAction("Services");
                 }
                 else
                 {
